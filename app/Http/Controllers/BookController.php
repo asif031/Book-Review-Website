@@ -16,7 +16,7 @@ class BookController extends Controller
         $title = $request->input("title");
         $filter = $request->input('filter', 'default');
 
-        $cacheKey = 'books:' . $filter;
+        $cacheKey = 'books:' . $filter . ':' . $title;
         $books = cache()->get($cacheKey);
         //checking if exists in cache and returning from cache
         if(!empty($books)) {
@@ -25,9 +25,9 @@ class BookController extends Controller
         }
 
         $books = Book::when($title, 
-            fn($query, $title)=>$query->title($title));
+            fn($query, $title) => $query->title($title));
 
-        $books = match($filter){
+        $books = match($filter) {
             'popular_last_month'=> $books->popularLastMonth(),
             'popular_last_6months'=> $books->popularLast6Months(),
             'highest_rated_last_month'=> $books->highestRatedLastMonth(),

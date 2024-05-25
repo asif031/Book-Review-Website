@@ -38,6 +38,7 @@
 
     <ul>
         @forelse ($books as $book)
+            
             <li class="mb-2">
                 <div class="book-item">
                     <div 
